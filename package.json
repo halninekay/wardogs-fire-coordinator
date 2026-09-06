@@ -1,0 +1,20 @@
+{
+  "name": "wardogs-fire-coordinator",
+  "version": "0.8.0-beta",
+  "private": true,
+  "description": "Unofficial browser-based artillery coordination tool for WARDOGS.",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "serve": "python3 -m http.server 8080"
+  },
+  "keywords": [
+    "wardogs",
+    "artillery",
+    "mortar",
+    "calculator",
+    "fire-coordinator"
+  ],
+  "author": "halninekay",
+  "license": "UNLICENSED"
+}
+

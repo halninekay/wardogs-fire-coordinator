@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- WARDOGS Fire Coordinator v0.8.0-beta. Copyright (c) 2026 halninekay. -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WARDOGS Fire Coordinator</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080908;
+      --panel: #111312;
+      --panel-2: #181a17;
+      --steel: #252a29;
+      --line: #424742;
+      --text: #f4f1e6;
+      --muted: #a19f94;
+      --accent: #f1b51d;
+      --amber: #ffc317;
+      --ok: #76d39a;
+      --bad: #e15a42;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .52);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        repeating-linear-gradient(135deg, rgba(241, 181, 29, .08) 0 8px, transparent 8px 23px),
+        linear-gradient(rgba(241, 181, 29, .032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(241, 181, 29, .032) 1px, transparent 1px),
+        radial-gradient(circle at 12% 0%, rgba(141, 40, 26, .2), transparent 34rem),
+        var(--bg);
+      background-size: 220px 220px, 36px 36px, 36px 36px, auto, auto;
+      color: var(--text);
+    }
+
+    main {
+      width: min(1680px, calc(100vw - 32px));
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 20px 0;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 14px;
+    }
+
+    header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4.2vw, 72px);
+      line-height: .92;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      text-shadow: 0 1px 0 #000, 0 12px 34px rgba(0, 0, 0, .55);
+    }
+
+    .tag, h2, label, button, .status, .unit, .small-readout {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      text-transform: uppercase;
+    }
+
+    .tag {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      letter-spacing: .08em;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .version-badge {
+      border: 1px solid rgba(241, 181, 29, .58);
+      border-radius: 4px;
+      background: rgba(241, 181, 29, .11);
+      color: var(--accent);
+      font: 900 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: .04em;
+      padding: 6px 9px;
+      text-transform: uppercase;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    button {
+      min-height: 42px;
+      border: 1px solid #59564a;
+      border-radius: 4px;
+      background: linear-gradient(#24251f, #161814);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 800;
+      padding: 0 14px;
+    }
+
+    button:hover, button.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .solution {
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(241, 181, 29, .22) 0 5px, transparent 5px),
+        linear-gradient(180deg, rgba(255, 255, 255, .035), transparent 32%),
+        rgba(17, 19, 18, .97);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .solution::after, .controls::after, .map-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(transparent 0 48%, rgba(255, 255, 255, .025) 50%, transparent 52%);
+      background-size: 100% 5px;
+      opacity: .45;
+    }
+
+    .solution-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .panel-code {
+      color: var(--muted);
+      font: 800 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--accent);
+      font-size: 15px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 5px 11px;
+    }
+
+    .status.ok { color: var(--ok); border-color: rgba(102, 237, 160, .55); }
+    .status.bad { color: var(--bad); border-color: rgba(225, 90, 66, .62); }
+
+    .readouts {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr .8fr 1fr;
+      gap: 10px;
+    }
+
+    .readout {
+      min-height: 150px;
+      border: 1px solid rgba(244, 241, 230, .16);
+      background:
+        linear-gradient(135deg, rgba(241, 181, 29, .08), transparent 42%),
+        #0c0e0d;
+      padding: 16px;
+      display: grid;
+      align-content: space-between;
+    }
+
+    .readout span {
+      color: var(--muted);
+      font: 800 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      text-transform: uppercase;
+    }
+
+    .readout strong {
+      color: var(--text);
+      font: 900 clamp(48px, 7vw, 104px) ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      line-height: .86;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .readout.primary strong, .readout.bearing strong {
+      color: var(--amber);
+    }
+
+    .unit {
+      color: var(--muted);
+      font-size: .35em;
+      margin-left: 6px;
+    }
+
+    .workbench {
+      display: grid;
+      grid-template-columns: minmax(640px, 1fr) minmax(360px, .62fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .controls, .map-panel {
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .025), transparent 34%),
+        rgba(17, 19, 18, .95);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .weapon-row {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto auto;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 12px;
+    }
+
+    .positions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .block {
+      border: 1px solid rgba(244, 241, 230, .14);
+      background:
+        linear-gradient(90deg, rgba(241, 181, 29, .14) 0 3px, transparent 3px),
+        var(--panel-2);
+      padding: 14px;
+    }
+
+    .block h2 {
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    input, select {
+      width: 100%;
+      min-height: 56px;
+      margin-top: 7px;
+      border: 1px solid #555346;
+      border-radius: 4px;
+      background: #0c0d0b;
+      color: var(--text);
+      font: 800 24px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      padding: 10px 48px 10px 14px;
+      outline: none;
+    }
+
+    select {
+      padding-right: 14px;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(241, 181, 29, .16);
+    }
+
+    .coord-control {
+      display: block;
+      position: relative;
+      margin-top: 7px;
+    }
+
+    .coord-control input { margin-top: 0; }
+
+    .step-stack {
+      display: grid;
+      gap: 4px;
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .stepper {
+      width: 28px;
+      min-height: 20px;
+      padding: 0;
+      border-color: #555346;
+      background: #171814;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1;
+      text-transform: none;
+    }
+
+    .small-readout {
+      margin-top: 12px;
+      border-top: 1px solid rgba(163, 173, 156, .2);
+      padding-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .small-readout strong {
+      color: var(--text);
+    }
+
+    .map-panel {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 12px;
+    }
+
+    .viz {
+      aspect-ratio: 1 / 1;
+      min-height: 360px;
+      max-height: min(64vh, 620px);
+      border: 1px solid rgba(163, 173, 156, .24);
+      background: #090b0a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .viz::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(241, 181, 29, .07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(241, 181, 29, .07) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+
+    svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .copyright {
+      color: #77756c;
+      font: 800 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      text-align: right;
+    }
+
+    body.compact .map-panel {
+      display: none;
+    }
+
+    body.compact .workbench {
+      grid-template-columns: 1fr;
+    }
+
+    body.fdc main {
+      width: min(1900px, calc(100vw - 24px));
+    }
+
+    body.fdc header, body.fdc .workbench {
+      display: none;
+    }
+
+    body.fdc .solution {
+      min-height: calc(100vh - 40px);
+      display: grid;
+      align-content: center;
+    }
+
+    body.fdc .readouts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body.fdc .readout {
+      min-height: 34vh;
+    }
+
+    body.fdc .readout strong {
+      font-size: clamp(86px, 13vw, 230px);
+    }
+
+    @media (max-width: 980px) {
+      main { width: min(100vw - 20px, 1680px); }
+      header, .weapon-row, .workbench, .positions, .readouts {
+        grid-template-columns: 1fr;
+      }
+      .readout { min-height: 118px; }
+    }
+
+    @media (max-width: 560px) {
+      h1 { font-size: 34px; }
+      .toolbar { justify-content: stretch; }
+      .toolbar button { flex: 1; }
+      .field-grid { grid-template-columns: 1fr; }
+      .readout strong { font-size: 46px; }
+      input, select { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <div class="tag">WARDOGS // Artillery Request Console</div>
+        <div class="title-row">
+          <h1>Fire Coordinator</h1>
+          <div class="version-badge">v0.8.0 beta</div>
+        </div>
+      </div>
+      <div class="toolbar" aria-label="Ansicht">
+        <button id="compactMode" type="button">Compact</button>
+        <button id="fdcMode" type="button">FDC</button>
+        <button id="fullscreen" type="button">Fullscreen</button>
+      </div>
+    </header>
+
+    <section class="solution" aria-label="Firing solution">
+      <div class="solution-head">
+        <h2>Fire Direction Center</h2>
+        <div id="status" class="status">Waiting for coordinates</div>
+      </div>
+      <div class="readouts">
+        <div class="readout primary">
+          <span>Range</span>
+          <strong id="distance">--<span class="unit">m</span></strong>
+        </div>
+        <div class="readout bearing">
+          <span>Bearing</span>
+          <strong id="azimuth">--<span class="unit">deg</span></strong>
+        </div>
+        <div class="readout">
+          <span>Direction</span>
+          <strong id="direction">--</strong>
+        </div>
+        <div class="readout">
+          <span id="weaponMetricLabel">Elevation</span>
+          <strong id="weaponMetric">--</strong>
+        </div>
+      </div>
+    </section>
+
+    <div class="workbench">
+      <section class="controls" aria-label="Coordinate input">
+        <div class="weapon-row">
+          <label for="weapon">Weapon system
+            <select id="weapon">
+              <option value="l81">L81 Mortar // 120-700 m</option>
+              <option value="sph2">SPH-2 Artillery // 735-2630 m</option>
+            </select>
+          </label>
+          <button id="clear" type="button">Clear</button>
+          <button id="demo" type="button">L81 Test</button>
+        </div>
+
+        <div class="positions">
+          <div class="block">
+            <h2>01 Firing Position</h2>
+            <div class="field-grid">
+              <label>X Coordinate
+                <span class="coord-control" data-target="fx">
+                  <input id="fx" inputmode="decimal" placeholder="109.25">
+                  <span class="step-stack">
+                    <button class="stepper" type="button" data-step="0.01" aria-label="Increase firing position X">⌃</button>
+                    <button class="stepper" type="button" data-step="-0.01" aria-label="Decrease firing position X">⌄</button>
+                  </span>
+                </span>
+              </label>
+              <label>Y Coordinate
+                <span class="coord-control" data-target="fy">
+                  <input id="fy" inputmode="decimal" placeholder="96.71">
+                  <span class="step-stack">
+                    <button class="stepper" type="button" data-step="0.01" aria-label="Increase firing position Y">⌃</button>
+                    <button class="stepper" type="button" data-step="-0.01" aria-label="Decrease firing position Y">⌄</button>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="block">
+            <h2>02 Target Position</h2>
+            <div class="field-grid">
+              <label>X Coordinate
+                <span class="coord-control" data-target="tx">
+                  <input id="tx" inputmode="decimal" placeholder="107.36">
+                  <span class="step-stack">
+                    <button class="stepper" type="button" data-step="0.01" aria-label="Increase target position X">⌃</button>
+                    <button class="stepper" type="button" data-step="-0.01" aria-label="Decrease target position X">⌄</button>
+                  </span>
+                </span>
+              </label>
+              <label>Y Coordinate
+                <span class="coord-control" data-target="ty">
+                  <input id="ty" inputmode="decimal" placeholder="94.71">
+                  <span class="step-stack">
+                    <button class="stepper" type="button" data-step="0.01" aria-label="Increase target position Y">⌃</button>
+                    <button class="stepper" type="button" data-step="-0.01" aria-label="Decrease target position Y">⌄</button>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div id="delta" class="small-readout">Delta: --</div>
+      </section>
+
+      <aside class="map-panel" aria-label="Shot direction preview">
+        <h2>Vector Preview</h2>
+        <div class="viz">
+          <svg viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet">
+            <line id="shotLine" x1="300" y1="300" x2="460" y2="180" stroke="#f1b51d" stroke-width="4" stroke-dasharray="10 8"></line>
+            <circle id="rangeRing" cx="300" cy="300" r="156" fill="none" stroke="#ffc317" stroke-width="2" opacity=".78"></circle>
+            <circle id="fireDot" cx="300" cy="300" r="10" fill="#76d39a"></circle>
+            <circle id="targetDot" cx="460" cy="180" r="10" fill="#e15a42"></circle>
+          </svg>
+        </div>
+        <p id="rangeText" class="note">Enter all four coordinates. L81 elevation is calibrated; SPH-2 uses range, bearing, and direction.</p>
+      </aside>
+    </div>
+    <div class="copyright">WARDOGS Fire Coordinator v0.8.0 beta // Copyright (c) 2026 halninekay</div>
+  </main>
+
+  <script>
+    const weapons = {
+      l81: {
+        name: "L81",
+        solutionType: "elevation",
+        min: 120,
+        max: 700,
+        calibration: [
+          { range: 120, elevation: 885 },
+          { range: 263, elevation: 725 },
+          { range: 275, elevation: 715 },
+          { range: 509, elevation: 450 },
+          { range: 700, elevation: 236 }
+        ]
+      },
+      sph2: {
+        name: "SPH-2",
+        solutionType: "weapon",
+        min: 735,
+        max: 2630
+      }
+    };
+
+    const ids = ["weapon", "fx", "fy", "tx", "ty"];
+    const el = Object.fromEntries(ids.map((id) => [id, document.getElementById(id)]));
+    const out = {
+      status: document.getElementById("status"),
+      distance: document.getElementById("distance"),
+      azimuth: document.getElementById("azimuth"),
+      direction: document.getElementById("direction"),
+      weaponMetricLabel: document.getElementById("weaponMetricLabel"),
+      weaponMetric: document.getElementById("weaponMetric"),
+      delta: document.getElementById("delta"),
+      rangeText: document.getElementById("rangeText"),
+      shotLine: document.getElementById("shotLine"),
+      fireDot: document.getElementById("fireDot"),
+      targetDot: document.getElementById("targetDot"),
+      rangeRing: document.getElementById("rangeRing")
+    };
+
+    function numberValue(input) {
+      const normalized = input.value.trim().replace(",", ".");
+      if (!normalized) return null;
+      const value = Number(normalized);
+      return Number.isFinite(value) ? value : null;
+    }
+
+    function bearing(dx, dy) {
+      return (Math.atan2(dx, dy) * 180 / Math.PI + 360) % 360;
+    }
+
+    function estimateElevation(distance, weapon) {
+      if (!weapon.calibration) return null;
+      const points = [...weapon.calibration].sort((a, b) => a.range - b.range);
+      if (distance <= points[0].range) return Math.round(points[0].elevation);
+      for (let i = 0; i < points.length - 1; i += 1) {
+        const a = points[i];
+        const b = points[i + 1];
+        if (distance <= b.range) {
+          const t = (distance - a.range) / (b.range - a.range);
+          return Math.round(a.elevation + (b.elevation - a.elevation) * t);
+        }
+      }
+      return Math.round(points[points.length - 1].elevation);
+    }
+
+    function cardinalDirection(degrees) {
+      const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+      return directions[Math.round(degrees / 45) % directions.length];
+    }
+
+    function formatDegrees(value) {
+      return `${Math.round(value).toString().padStart(3, "0")}<span class="unit">deg</span>`;
+    }
+
+    function setStatus(text, mode) {
+      out.status.textContent = text;
+      out.status.className = `status ${mode || ""}`.trim();
+    }
+
+    function setMetric(label, value) {
+      out.weaponMetricLabel.textContent = label;
+      out.weaponMetric.textContent = value;
+    }
+
+    function updateViz(dx, dy, valid) {
+      const scale = Math.max(1, Math.hypot(dx, dy));
+      const fx = 300;
+      const fy = 300;
+      const tx = fx + (dx / scale) * 190;
+      const ty = fy - (dy / scale) * 190;
+      out.shotLine.setAttribute("x1", fx);
+      out.shotLine.setAttribute("y1", fy);
+      out.shotLine.setAttribute("x2", tx);
+      out.shotLine.setAttribute("y2", ty);
+      out.fireDot.setAttribute("cx", fx);
+      out.fireDot.setAttribute("cy", fy);
+      out.targetDot.setAttribute("cx", tx);
+      out.targetDot.setAttribute("cy", ty);
+      out.rangeRing.setAttribute("stroke", valid ? "#66eda0" : "#ffc72e");
+    }
+
+    function clearOutputs() {
+      const weapon = weapons[el.weapon.value];
+      setStatus("Waiting for coordinates");
+      out.distance.innerHTML = `--<span class="unit">m</span>`;
+      out.azimuth.innerHTML = `--<span class="unit">deg</span>`;
+      out.direction.textContent = "--";
+      setMetric(weapon.solutionType === "weapon" ? "Weapon" : "Elevation", "--");
+      out.delta.textContent = "Delta: --";
+      out.rangeText.textContent = "Enter all four coordinates. L81 elevation is calibrated; SPH-2 uses range, bearing, and direction.";
+      updateViz(1, 1, false);
+    }
+
+    function calculate() {
+      const weapon = weapons[el.weapon.value];
+      const fx = numberValue(el.fx);
+      const fy = numberValue(el.fy);
+      const tx = numberValue(el.tx);
+      const ty = numberValue(el.ty);
+
+      if ([fx, fy, tx, ty].some((value) => value === null)) {
+        clearOutputs();
+        return;
+      }
+
+      const dx = tx - fx;
+      const dy = ty - fy;
+      const distance = Math.hypot(dx, dy) * 100;
+      const azimuth = bearing(dx, dy);
+      const inRange = distance >= weapon.min && distance <= weapon.max;
+      const elevation = estimateElevation(distance, weapon);
+      const eastWest = dx >= 0 ? "East" : "West";
+      const northSouth = dy >= 0 ? "North" : "South";
+
+      out.distance.innerHTML = `${Math.round(distance)}<span class="unit">m</span>`;
+      out.azimuth.innerHTML = formatDegrees(azimuth);
+      out.direction.textContent = cardinalDirection(azimuth);
+      setMetric(weapon.solutionType === "weapon" ? "Weapon" : "Elevation", weapon.solutionType === "weapon" ? weapon.name : elevation.toString());
+      out.delta.innerHTML = `Delta: <strong>${Math.round(Math.abs(dx * 100))} m ${eastWest}</strong> + <strong>${Math.round(Math.abs(dy * 100))} m ${northSouth}</strong>`;
+
+      setStatus(`${weapon.name} ${inRange ? "in range" : "out of range"}`, inRange ? "ok" : "bad");
+
+      if (weapon.solutionType === "weapon") {
+        out.rangeText.textContent = `${weapon.name}: effective range ${weapon.min}-${weapon.max} m. Set the displayed bearing and correct from impact.`;
+      } else {
+        out.rangeText.textContent = `${weapon.name}: effective range ${weapon.min}-${weapon.max} m. L81 calibration points: 263 m = 725 mil, 275 m = 715 mil, 509 m = 450 mil.`;
+      }
+      updateViz(dx, dy, inRange);
+    }
+
+    ids.forEach((id) => el[id].addEventListener("input", calculate));
+    el.weapon.addEventListener("change", calculate);
+
+    document.querySelectorAll(".coord-control").forEach((control) => {
+      const input = document.getElementById(control.dataset.target);
+      control.querySelectorAll(".stepper").forEach((button) => {
+        button.addEventListener("click", () => {
+          const current = numberValue(input) ?? 0;
+          const next = current + Number(button.dataset.step);
+          input.value = next.toFixed(2).replace(/\.?0+$/, "");
+          input.dispatchEvent(new Event("input", { bubbles: true }));
+        });
+      });
+    });
+
+    document.getElementById("clear").addEventListener("click", () => {
+      ["fx", "fy", "tx", "ty"].forEach((id) => { el[id].value = ""; });
+      calculate();
+      el.fx.focus();
+    });
+
+    document.getElementById("demo").addEventListener("click", () => {
+      el.weapon.value = "l81";
+      el.fx.value = "109.25";
+      el.fy.value = "96.71";
+      el.tx.value = "107.36";
+      el.ty.value = "94.71";
+      calculate();
+    });
+
+    document.getElementById("compactMode").addEventListener("click", (event) => {
+      document.body.classList.toggle("compact");
+      event.currentTarget.classList.toggle("active", document.body.classList.contains("compact"));
+    });
+
+    document.getElementById("fdcMode").addEventListener("click", (event) => {
+      document.body.classList.toggle("fdc");
+      event.currentTarget.classList.toggle("active", document.body.classList.contains("fdc"));
+    });
+
+    document.getElementById("fullscreen").addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen?.();
+      } else {
+        document.exitFullscreen?.();
+      }
+    });
+
+    calculate();
+  </script>
+</body>
+</html>
