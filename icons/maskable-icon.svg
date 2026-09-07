@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="WARDOGS Fire Coordinator maskable icon">
+  <rect width="512" height="512" fill="#080908"/>
+  <path d="M0 0h512v512H0z" fill="url(#grid)" opacity=".45"/>
+  <circle cx="256" cy="256" r="150" fill="#121312" stroke="#f1b51d" stroke-width="18"/>
+  <path d="M256 256 360 154" stroke="#f4f1e6" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="256" cy="256" r="26" fill="#76d39a"/>
+  <circle cx="360" cy="154" r="26" fill="#e15a42"/>
+  <path d="M134 374h244" stroke="#f1b51d" stroke-width="22" stroke-linecap="square"/>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0v32" fill="none" stroke="#f1b51d" stroke-width="1" opacity=".22"/>
+    </pattern>
+  </defs>
+</svg>

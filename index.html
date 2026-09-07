@@ -1,9 +1,18 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- WARDOGS Fire Coordinator v0.8.0-beta. Copyright (c) 2026 halninekay. -->
+  <!-- WARDOGS Fire Coordinator v0.9.0-beta. Copyright (c) 2026 halninekay. -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080908">
+  <meta name="description" content="Unofficial WARDOGS artillery coordination tool for L81 Mortar and SPH-2 firing solutions.">
+  <meta name="application-name" content="WARDOGS Fire Coordinator">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Fire Coordinator">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg">
   <title>WARDOGS Fire Coordinator</title>
   <style>
     :root {
@@ -446,7 +455,7 @@
         <div class="tag">WARDOGS // Artillery Request Console</div>
         <div class="title-row">
           <h1>Fire Coordinator</h1>
-          <div class="version-badge">v0.8.0 beta</div>
+          <div class="version-badge">v0.9.0 beta</div>
         </div>
       </div>
       <div class="toolbar" aria-label="Ansicht">
@@ -560,7 +569,7 @@
         <p id="rangeText" class="note">Enter all four coordinates. L81 elevation is calibrated; SPH-2 uses range, bearing, and direction.</p>
       </aside>
     </div>
-    <div class="copyright">WARDOGS Fire Coordinator v0.8.0 beta // Copyright (c) 2026 halninekay</div>
+    <div class="copyright">WARDOGS Fire Coordinator v0.9.0 beta // Copyright (c) 2026 halninekay</div>
   </main>
 
   <script>
@@ -761,6 +770,12 @@
         document.exitFullscreen?.();
       }
     });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("service-worker.js").catch(() => {});
+      });
+    }
 
     calculate();
   </script>

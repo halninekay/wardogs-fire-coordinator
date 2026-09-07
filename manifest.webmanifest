@@ -1,0 +1,27 @@
+{
+  "name": "WARDOGS Fire Coordinator",
+  "short_name": "Fire Coord",
+  "description": "Unofficial WARDOGS artillery coordination tool for L81 Mortar and SPH-2 firing solutions.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#080908",
+  "theme_color": "#080908",
+  "categories": ["games", "utilities"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/maskable-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

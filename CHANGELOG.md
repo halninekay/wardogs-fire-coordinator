@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.9.0 beta - 2026-09-07
+
+- Added Progressive Web App support.
+- Added web app manifest.
+- Added service worker for offline app shell caching.
+- Added app icons.
+- Added mobile web app metadata for installable behavior.
+- Updated project version from v0.8.0 beta to v0.9.0 beta.
+
 ## v0.8.0 beta - 2026-09-06
 
 - Renamed the project to WARDOGS Fire Coordinator.
@@ -24,4 +33,3 @@
 - Added L81 and SPH-2 weapon selection.
 - Added range, bearing, direction, delta-grid, and range-status outputs.
 - Added compact coordinate stepper controls.
-

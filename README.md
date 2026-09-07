@@ -1,6 +1,6 @@
 # WARDOGS Fire Coordinator
 
-**Version:** v0.8.0 beta  
+**Version:** v0.9.0 beta  
 **Copyright:** Copyright (c) 2026 halninekay
 
 WARDOGS Fire Coordinator is a lightweight browser-based artillery coordination tool for WARDOGS. It helps players request or coordinate indirect fire by entering manual grid coordinates and reading a fast firing solution.
@@ -21,6 +21,9 @@ The app is built as a single static HTML file. No account, server, build step, o
 - Compact mode
 - FDC mode for large readouts
 - Fullscreen button
+- Progressive Web App support
+- Offline app shell after first load
+- Installable on supported mobile and desktop browsers
 
 ## Current Calibration
 
@@ -43,9 +46,25 @@ Open `index.html` in any modern browser.
 3. Enter the target-position X/Y coordinates.
 4. Read range, bearing, direction, and elevation or weapon solution.
 
+## Install as App
+
+When hosted through GitHub Pages or another HTTPS host, the tool can be installed as a Progressive Web App.
+
+On Android/Chrome:
+
+1. Open the hosted app URL.
+2. Open the browser menu.
+3. Choose **Install app** or **Add to Home screen**.
+
+On iPhone/Safari:
+
+1. Open the hosted app URL.
+2. Tap **Share**.
+3. Choose **Add to Home Screen**.
+
 ## Status
 
-This project is currently marked as **v0.8.0 beta**.
+This project is currently marked as **v0.9.0 beta**.
 
 Range, bearing, direction, and SPH-2 behavior are stable against the available reference values. L81 elevation is useful, but still needs more calibration points before a v1.0 release.
 

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="WARDOGS Fire Coordinator Apple touch icon">
+  <rect width="180" height="180" rx="36" fill="#080908"/>
+  <path d="M16 25h148v130H16z" fill="#121312" stroke="#424742" stroke-width="5"/>
+  <path d="M27 39h44v7H27zM84 39h68v7H84z" fill="#f1b51d"/>
+  <circle cx="90" cy="98" r="43" fill="none" stroke="#f1b51d" stroke-width="7"/>
+  <path d="M90 98 124 64" stroke="#f4f1e6" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="90" cy="98" r="8" fill="#76d39a"/>
+  <circle cx="124" cy="64" r="8" fill="#e15a42"/>
+  <path d="M48 143h84" stroke="#f1b51d" stroke-width="8"/>
+</svg>

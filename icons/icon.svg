@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="WARDOGS Fire Coordinator icon">
+  <rect width="512" height="512" rx="64" fill="#080908"/>
+  <path d="M0 0h512v512H0z" fill="url(#grid)" opacity=".55"/>
+  <path d="M44 76h424v360H44z" fill="#121312" stroke="#424742" stroke-width="8"/>
+  <path d="M44 76h424v48H44z" fill="#1b1c18"/>
+  <path d="M60 92h108v16H60zM196 92h256v16H196z" fill="#f1b51d"/>
+  <circle cx="256" cy="282" r="118" fill="none" stroke="#f1b51d" stroke-width="14"/>
+  <path d="M256 282 350 190" stroke="#f4f1e6" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="256" cy="282" r="22" fill="#76d39a"/>
+  <circle cx="350" cy="190" r="22" fill="#e15a42"/>
+  <path d="M120 398h272" stroke="#f1b51d" stroke-width="18" stroke-linecap="square"/>
+  <path d="M146 354h220" stroke="#f4f1e6" stroke-width="18" stroke-linecap="square"/>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0v32" fill="none" stroke="#f1b51d" stroke-width="1" opacity=".25"/>
+    </pattern>
+  </defs>
+</svg>

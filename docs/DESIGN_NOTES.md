@@ -1,7 +1,7 @@
 # WARDOGS Fire Coordinator Design Notes
 
 Date: 2026-09-06  
-Current monitor version: `v0.8.0 beta`
+Current monitor version: `v0.9.0 beta`
 
 ## Purpose
 
@@ -10,6 +10,9 @@ WARDOGS Fire Coordinator is a small manual artillery request and indirect-fire t
 ## Current State
 
 - Main app file: `index.html`
+- PWA manifest: `manifest.webmanifest`
+- Offline worker: `service-worker.js`
+- App icons: `icons/`
 - Product name: WARDOGS Fire Coordinator
 - Copyright: Copyright (c) 2026 halninekay
 - Two supported weapon systems:
@@ -26,6 +29,7 @@ WARDOGS Fire Coordinator is a small manual artillery request and indirect-fire t
   - range status
 - SPH-2 displays range, bearing, direction, and weapon.
 - L81 also displays estimated mortar elevation.
+- Installable PWA behavior is available when hosted over HTTPS.
 
 ## L81 Calibration Points
 
@@ -62,7 +66,7 @@ More calibration points can improve the curve later, especially below 263 m and 
 
 ## Versioning
 
-The current monitor build is labeled `v0.8.0 beta`.
+The current monitor build is labeled `v0.9.0 beta`.
 
 Development milestones counted so far:
 
@@ -74,6 +78,7 @@ Development milestones counted so far:
 6. Coordinate steppers changed to compact up/down controls.
 7. SPH-2 output changed to weapon/range/bearing/direction behavior.
 8. Monitor/second-screen UI with WARDOGS theme, English text, copyright, beta label, and round vector preview.
+9. Progressive Web App support with manifest, app icons, mobile metadata, and offline app shell caching.
 
 Why beta:
 
