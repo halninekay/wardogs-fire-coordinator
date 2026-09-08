@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- WARDOGS Fire Coordinator v0.9.0-beta. Copyright (c) 2026 halninekay. -->
+  <!-- WARDOGS Fire Coordinator v0.10.0-beta. Copyright (c) 2026 halninekay. -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080908">
@@ -214,6 +214,11 @@
       line-height: .86;
       letter-spacing: 0;
       white-space: nowrap;
+    }
+
+    #weaponMetric {
+      font-size: clamp(30px, 4.1vw, 76px);
+      line-height: .95;
     }
 
     .readout.primary strong, .readout.bearing strong {
@@ -455,7 +460,7 @@
         <div class="tag">WARDOGS // Artillery Request Console</div>
         <div class="title-row">
           <h1>Fire Coordinator</h1>
-          <div class="version-badge">v0.9.0 beta</div>
+          <div class="version-badge">v0.10.0 beta</div>
         </div>
       </div>
       <div class="toolbar" aria-label="Ansicht">
@@ -566,33 +571,928 @@
             <circle id="targetDot" cx="460" cy="180" r="10" fill="#e15a42"></circle>
           </svg>
         </div>
-        <p id="rangeText" class="note">Enter all four coordinates. L81 elevation is calibrated; SPH-2 uses range, bearing, and direction.</p>
+        <p id="rangeText" class="note">Enter all four coordinates. L81 and SPH-2 use reference ballistic tables.</p>
       </aside>
     </div>
-    <div class="copyright">WARDOGS Fire Coordinator v0.9.0 beta // Copyright (c) 2026 halninekay</div>
+    <div class="copyright">WARDOGS Fire Coordinator v0.10.0 beta // Copyright (c) 2026 halninekay</div>
   </main>
 
   <script>
     const weapons = {
-      l81: {
-        name: "L81",
-        solutionType: "elevation",
-        min: 120,
-        max: 700,
-        calibration: [
-          { range: 120, elevation: 885 },
-          { range: 263, elevation: 725 },
-          { range: 275, elevation: 715 },
-          { range: 509, elevation: 450 },
-          { range: 700, elevation: 236 }
-        ]
-      },
-      sph2: {
-        name: "SPH-2",
-        solutionType: "weapon",
-        min: 735,
-        max: 2630
-      }
+          "l81": {
+                "name": "L81",
+                "solutionType": "single",
+                "min": 132,
+                "max": 684,
+                "ballistics": {
+                      "single": [
+                            [
+                                  80,
+                                  950
+                            ],
+                            [
+                                  87,
+                                  940
+                            ],
+                            [
+                                  93,
+                                  930
+                            ],
+                            [
+                                  99,
+                                  920
+                            ],
+                            [
+                                  105,
+                                  910
+                            ],
+                            [
+                                  110,
+                                  900
+                            ],
+                            [
+                                  115,
+                                  890
+                            ],
+                            [
+                                  118,
+                                  880
+                            ],
+                            [
+                                  122,
+                                  870
+                            ],
+                            [
+                                  127,
+                                  860
+                            ],
+                            [
+                                  132,
+                                  850
+                            ],
+                            [
+                                  140,
+                                  840
+                            ],
+                            [
+                                  151,
+                                  830
+                            ],
+                            [
+                                  163,
+                                  820
+                            ],
+                            [
+                                  175,
+                                  810
+                            ],
+                            [
+                                  187,
+                                  800
+                            ],
+                            [
+                                  198,
+                                  790
+                            ],
+                            [
+                                  208,
+                                  780
+                            ],
+                            [
+                                  219,
+                                  770
+                            ],
+                            [
+                                  229,
+                                  760
+                            ],
+                            [
+                                  239,
+                                  750
+                            ],
+                            [
+                                  250,
+                                  740
+                            ],
+                            [
+                                  260,
+                                  730
+                            ],
+                            [
+                                  270,
+                                  720
+                            ],
+                            [
+                                  280,
+                                  710
+                            ],
+                            [
+                                  290,
+                                  700
+                            ],
+                            [
+                                  300,
+                                  690
+                            ],
+                            [
+                                  310,
+                                  680
+                            ],
+                            [
+                                  319,
+                                  670
+                            ],
+                            [
+                                  329,
+                                  660
+                            ],
+                            [
+                                  339,
+                                  650
+                            ],
+                            [
+                                  348,
+                                  640
+                            ],
+                            [
+                                  358,
+                                  630
+                            ],
+                            [
+                                  367,
+                                  620
+                            ],
+                            [
+                                  376,
+                                  610
+                            ],
+                            [
+                                  385,
+                                  600
+                            ],
+                            [
+                                  394,
+                                  590
+                            ],
+                            [
+                                  403,
+                                  580
+                            ],
+                            [
+                                  412,
+                                  570
+                            ],
+                            [
+                                  420,
+                                  560
+                            ],
+                            [
+                                  429,
+                                  550
+                            ],
+                            [
+                                  437,
+                                  540
+                            ],
+                            [
+                                  446,
+                                  530
+                            ],
+                            [
+                                  454,
+                                  520
+                            ],
+                            [
+                                  462,
+                                  510
+                            ],
+                            [
+                                  470,
+                                  500
+                            ],
+                            [
+                                  478,
+                                  490
+                            ],
+                            [
+                                  486,
+                                  480
+                            ],
+                            [
+                                  494,
+                                  470
+                            ],
+                            [
+                                  501,
+                                  460
+                            ],
+                            [
+                                  509,
+                                  450
+                            ],
+                            [
+                                  516,
+                                  440
+                            ],
+                            [
+                                  524,
+                                  430
+                            ],
+                            [
+                                  531,
+                                  420
+                            ],
+                            [
+                                  538,
+                                  410
+                            ],
+                            [
+                                  545,
+                                  400
+                            ],
+                            [
+                                  552,
+                                  390
+                            ],
+                            [
+                                  559,
+                                  380
+                            ],
+                            [
+                                  565,
+                                  370
+                            ],
+                            [
+                                  572,
+                                  360
+                            ],
+                            [
+                                  578,
+                                  350
+                            ],
+                            [
+                                  585,
+                                  340
+                            ],
+                            [
+                                  591,
+                                  330
+                            ],
+                            [
+                                  597,
+                                  320
+                            ],
+                            [
+                                  603,
+                                  310
+                            ],
+                            [
+                                  609,
+                                  300
+                            ],
+                            [
+                                  615,
+                                  290
+                            ],
+                            [
+                                  620,
+                                  280
+                            ],
+                            [
+                                  626,
+                                  270
+                            ],
+                            [
+                                  631,
+                                  260
+                            ],
+                            [
+                                  636,
+                                  250
+                            ],
+                            [
+                                  641,
+                                  240
+                            ],
+                            [
+                                  646,
+                                  230
+                            ],
+                            [
+                                  651,
+                                  220
+                            ],
+                            [
+                                  656,
+                                  210
+                            ],
+                            [
+                                  661,
+                                  200
+                            ],
+                            [
+                                  666,
+                                  190
+                            ],
+                            [
+                                  670,
+                                  180
+                            ],
+                            [
+                                  675,
+                                  170
+                            ],
+                            [
+                                  680,
+                                  160
+                            ],
+                            [
+                                  684,
+                                  150
+                            ],
+                            [
+                                  688,
+                                  140
+                            ],
+                            [
+                                  693,
+                                  130
+                            ],
+                            [
+                                  697,
+                                  120
+                            ]
+                      ]
+                }
+          },
+          "sph2": {
+                "name": "SPH-2",
+                "solutionType": "dual",
+                "min": 780,
+                "max": 2629,
+                "ballistics": {
+                      "low": [
+                            [
+                                  1181,
+                                  20
+                            ],
+                            [
+                                  1232,
+                                  30
+                            ],
+                            [
+                                  1283,
+                                  40
+                            ],
+                            [
+                                  1334,
+                                  50
+                            ],
+                            [
+                                  1384,
+                                  60
+                            ],
+                            [
+                                  1433,
+                                  70
+                            ],
+                            [
+                                  1482,
+                                  80
+                            ],
+                            [
+                                  1529,
+                                  90
+                            ],
+                            [
+                                  1576,
+                                  100
+                            ],
+                            [
+                                  1622,
+                                  110
+                            ],
+                            [
+                                  1666,
+                                  120
+                            ],
+                            [
+                                  1709,
+                                  130
+                            ],
+                            [
+                                  1751,
+                                  140
+                            ],
+                            [
+                                  1792,
+                                  150
+                            ],
+                            [
+                                  1832,
+                                  160
+                            ],
+                            [
+                                  1870,
+                                  170
+                            ],
+                            [
+                                  1907,
+                                  180
+                            ],
+                            [
+                                  1944,
+                                  190
+                            ],
+                            [
+                                  1979,
+                                  200
+                            ],
+                            [
+                                  2014,
+                                  210
+                            ],
+                            [
+                                  2046,
+                                  220
+                            ],
+                            [
+                                  2079,
+                                  230
+                            ],
+                            [
+                                  2110,
+                                  240
+                            ],
+                            [
+                                  2139,
+                                  250
+                            ],
+                            [
+                                  2168,
+                                  260
+                            ],
+                            [
+                                  2196,
+                                  270
+                            ],
+                            [
+                                  2223,
+                                  280
+                            ],
+                            [
+                                  2249,
+                                  290
+                            ],
+                            [
+                                  2273,
+                                  300
+                            ],
+                            [
+                                  2296,
+                                  310
+                            ],
+                            [
+                                  2319,
+                                  320
+                            ],
+                            [
+                                  2341,
+                                  330
+                            ],
+                            [
+                                  2362,
+                                  340
+                            ],
+                            [
+                                  2383,
+                                  350
+                            ],
+                            [
+                                  2403,
+                                  360
+                            ],
+                            [
+                                  2422,
+                                  370
+                            ],
+                            [
+                                  2439,
+                                  380
+                            ],
+                            [
+                                  2456,
+                                  390
+                            ],
+                            [
+                                  2471,
+                                  400
+                            ],
+                            [
+                                  2485,
+                                  410
+                            ],
+                            [
+                                  2499,
+                                  420
+                            ],
+                            [
+                                  2513,
+                                  430
+                            ],
+                            [
+                                  2526,
+                                  440
+                            ],
+                            [
+                                  2538,
+                                  450
+                            ],
+                            [
+                                  2550,
+                                  460
+                            ],
+                            [
+                                  2561,
+                                  470
+                            ],
+                            [
+                                  2570,
+                                  480
+                            ],
+                            [
+                                  2579,
+                                  490
+                            ],
+                            [
+                                  2586,
+                                  500
+                            ],
+                            [
+                                  2593,
+                                  510
+                            ],
+                            [
+                                  2599,
+                                  520
+                            ],
+                            [
+                                  2605,
+                                  530
+                            ],
+                            [
+                                  2610,
+                                  540
+                            ],
+                            [
+                                  2615,
+                                  550
+                            ],
+                            [
+                                  2620,
+                                  560
+                            ],
+                            [
+                                  2623,
+                                  570
+                            ],
+                            [
+                                  2626,
+                                  580
+                            ],
+                            [
+                                  2628,
+                                  590
+                            ],
+                            [
+                                  2629,
+                                  600
+                            ]
+                      ],
+                      "high": [
+                            [
+                                  2629,
+                                  610
+                            ],
+                            [
+                                  2629,
+                                  620
+                            ],
+                            [
+                                  2628,
+                                  630
+                            ],
+                            [
+                                  2626,
+                                  640
+                            ],
+                            [
+                                  2624,
+                                  650
+                            ],
+                            [
+                                  2621,
+                                  660
+                            ],
+                            [
+                                  2617,
+                                  670
+                            ],
+                            [
+                                  2613,
+                                  680
+                            ],
+                            [
+                                  2609,
+                                  690
+                            ],
+                            [
+                                  2604,
+                                  700
+                            ],
+                            [
+                                  2599,
+                                  710
+                            ],
+                            [
+                                  2592,
+                                  720
+                            ],
+                            [
+                                  2584,
+                                  730
+                            ],
+                            [
+                                  2576,
+                                  740
+                            ],
+                            [
+                                  2567,
+                                  750
+                            ],
+                            [
+                                  2557,
+                                  760
+                            ],
+                            [
+                                  2546,
+                                  770
+                            ],
+                            [
+                                  2536,
+                                  780
+                            ],
+                            [
+                                  2524,
+                                  790
+                            ],
+                            [
+                                  2513,
+                                  800
+                            ],
+                            [
+                                  2501,
+                                  810
+                            ],
+                            [
+                                  2488,
+                                  820
+                            ],
+                            [
+                                  2474,
+                                  830
+                            ],
+                            [
+                                  2460,
+                                  840
+                            ],
+                            [
+                                  2444,
+                                  850
+                            ],
+                            [
+                                  2429,
+                                  860
+                            ],
+                            [
+                                  2412,
+                                  870
+                            ],
+                            [
+                                  2395,
+                                  880
+                            ],
+                            [
+                                  2378,
+                                  890
+                            ],
+                            [
+                                  2360,
+                                  900
+                            ],
+                            [
+                                  2342,
+                                  910
+                            ],
+                            [
+                                  2323,
+                                  920
+                            ],
+                            [
+                                  2303,
+                                  930
+                            ],
+                            [
+                                  2282,
+                                  940
+                            ],
+                            [
+                                  2261,
+                                  950
+                            ],
+                            [
+                                  2239,
+                                  960
+                            ],
+                            [
+                                  2217,
+                                  970
+                            ],
+                            [
+                                  2194,
+                                  980
+                            ],
+                            [
+                                  2171,
+                                  990
+                            ],
+                            [
+                                  2147,
+                                  1000
+                            ],
+                            [
+                                  2123,
+                                  1010
+                            ],
+                            [
+                                  2098,
+                                  1020
+                            ],
+                            [
+                                  2072,
+                                  1030
+                            ],
+                            [
+                                  2046,
+                                  1040
+                            ],
+                            [
+                                  2019,
+                                  1050
+                            ],
+                            [
+                                  1991,
+                                  1060
+                            ],
+                            [
+                                  1963,
+                                  1070
+                            ],
+                            [
+                                  1934,
+                                  1080
+                            ],
+                            [
+                                  1905,
+                                  1090
+                            ],
+                            [
+                                  1875,
+                                  1100
+                            ],
+                            [
+                                  1844,
+                                  1110
+                            ],
+                            [
+                                  1813,
+                                  1120
+                            ],
+                            [
+                                  1782,
+                                  1130
+                            ],
+                            [
+                                  1750,
+                                  1140
+                            ],
+                            [
+                                  1717,
+                                  1150
+                            ],
+                            [
+                                  1684,
+                                  1160
+                            ],
+                            [
+                                  1650,
+                                  1170
+                            ],
+                            [
+                                  1616,
+                                  1180
+                            ],
+                            [
+                                  1582,
+                                  1190
+                            ],
+                            [
+                                  1547,
+                                  1200
+                            ],
+                            [
+                                  1512,
+                                  1210
+                            ],
+                            [
+                                  1475,
+                                  1220
+                            ],
+                            [
+                                  1438,
+                                  1230
+                            ],
+                            [
+                                  1401,
+                                  1240
+                            ],
+                            [
+                                  1363,
+                                  1250
+                            ],
+                            [
+                                  1324,
+                                  1260
+                            ],
+                            [
+                                  1285,
+                                  1270
+                            ],
+                            [
+                                  1245,
+                                  1280
+                            ],
+                            [
+                                  1205,
+                                  1290
+                            ],
+                            [
+                                  1165,
+                                  1300
+                            ],
+                            [
+                                  1124,
+                                  1310
+                            ],
+                            [
+                                  1083,
+                                  1320
+                            ],
+                            [
+                                  1041,
+                                  1330
+                            ],
+                            [
+                                  999,
+                                  1340
+                            ],
+                            [
+                                  956,
+                                  1350
+                            ],
+                            [
+                                  913,
+                                  1360
+                            ],
+                            [
+                                  869,
+                                  1370
+                            ],
+                            [
+                                  825,
+                                  1380
+                            ],
+                            [
+                                  780,
+                                  1390
+                            ],
+                            [
+                                  735,
+                                  1400
+                            ]
+                      ]
+                }
+          }
     };
 
     const ids = ["weapon", "fx", "fy", "tx", "ty"];
@@ -623,19 +1523,55 @@
       return (Math.atan2(dx, dy) * 180 / Math.PI + 360) % 360;
     }
 
-    function estimateElevation(distance, weapon) {
-      if (!weapon.calibration) return null;
-      const points = [...weapon.calibration].sort((a, b) => a.range - b.range);
-      if (distance <= points[0].range) return Math.round(points[0].elevation);
+    function interpolateTable(table, distance) {
+      if (!Array.isArray(table) || !table.length) return null;
+      const points = [...table].sort((a, b) => a[0] - b[0]);
+      const exact = points.filter(([pointDistance]) => pointDistance === distance);
+      if (exact.length) {
+        const averageMil = exact.reduce((sum, [, mil]) => sum + mil, 0) / exact.length;
+        return Math.round(averageMil);
+      }
+      if (distance <= points[0][0]) return Math.round(points[0][1]);
       for (let i = 0; i < points.length - 1; i += 1) {
-        const a = points[i];
-        const b = points[i + 1];
-        if (distance <= b.range) {
-          const t = (distance - a.range) / (b.range - a.range);
-          return Math.round(a.elevation + (b.elevation - a.elevation) * t);
+        const [leftDistance, leftMil] = points[i];
+        const [rightDistance, rightMil] = points[i + 1];
+        if (rightDistance === leftDistance) continue;
+        if (distance <= rightDistance) {
+          const t = (distance - leftDistance) / (rightDistance - leftDistance);
+          return Math.round(leftMil + (rightMil - leftMil) * t);
         }
       }
-      return Math.round(points[points.length - 1].elevation);
+      return Math.round(points[points.length - 1][1]);
+    }
+
+    function getFiringSolution(weapon, distance) {
+      if (weapon.solutionType === "single") {
+        return {
+          label: "MIL",
+          value: String(interpolateTable(weapon.ballistics.single, distance)),
+          note: `${weapon.name}: effective range ${weapon.min}-${weapon.max} m. MIL is interpolated from the reference ballistic table.`
+        };
+      }
+
+      if (weapon.solutionType === "dual") {
+        const low = interpolateTable(weapon.ballistics.low, distance);
+        const high = interpolateTable(weapon.ballistics.high, distance);
+        const value = [
+          low !== null ? `LOW ${low}` : null,
+          high !== null ? `HIGH ${high}` : null
+        ].filter(Boolean).join(" / ");
+        return {
+          label: "MIL",
+          value: value || "--",
+          note: `${weapon.name}: effective range ${weapon.min}-${weapon.max} m. LOW/HIGH MIL values are interpolated from the reference ballistic tables.`
+        };
+      }
+
+      return {
+        label: "Weapon",
+        value: weapon.name,
+        note: `${weapon.name}: effective range ${weapon.min}-${weapon.max} m.`
+      };
     }
 
     function cardinalDirection(degrees) {
@@ -680,9 +1616,9 @@
       out.distance.innerHTML = `--<span class="unit">m</span>`;
       out.azimuth.innerHTML = `--<span class="unit">deg</span>`;
       out.direction.textContent = "--";
-      setMetric(weapon.solutionType === "weapon" ? "Weapon" : "Elevation", "--");
+      setMetric("MIL", "--");
       out.delta.textContent = "Delta: --";
-      out.rangeText.textContent = "Enter all four coordinates. L81 elevation is calibrated; SPH-2 uses range, bearing, and direction.";
+      out.rangeText.textContent = "Enter all four coordinates. L81 and SPH-2 use reference ballistic tables.";
       updateViz(1, 1, false);
     }
 
@@ -703,23 +1639,19 @@
       const distance = Math.hypot(dx, dy) * 100;
       const azimuth = bearing(dx, dy);
       const inRange = distance >= weapon.min && distance <= weapon.max;
-      const elevation = estimateElevation(distance, weapon);
+      const firingSolution = getFiringSolution(weapon, distance);
       const eastWest = dx >= 0 ? "East" : "West";
       const northSouth = dy >= 0 ? "North" : "South";
 
       out.distance.innerHTML = `${Math.round(distance)}<span class="unit">m</span>`;
       out.azimuth.innerHTML = formatDegrees(azimuth);
       out.direction.textContent = cardinalDirection(azimuth);
-      setMetric(weapon.solutionType === "weapon" ? "Weapon" : "Elevation", weapon.solutionType === "weapon" ? weapon.name : elevation.toString());
+      setMetric(firingSolution.label, firingSolution.value);
       out.delta.innerHTML = `Delta: <strong>${Math.round(Math.abs(dx * 100))} m ${eastWest}</strong> + <strong>${Math.round(Math.abs(dy * 100))} m ${northSouth}</strong>`;
 
       setStatus(`${weapon.name} ${inRange ? "in range" : "out of range"}`, inRange ? "ok" : "bad");
 
-      if (weapon.solutionType === "weapon") {
-        out.rangeText.textContent = `${weapon.name}: effective range ${weapon.min}-${weapon.max} m. Set the displayed bearing and correct from impact.`;
-      } else {
-        out.rangeText.textContent = `${weapon.name}: effective range ${weapon.min}-${weapon.max} m. L81 calibration points: 263 m = 725 mil, 275 m = 715 mil, 509 m = 450 mil.`;
-      }
+      out.rangeText.textContent = firingSolution.note;
       updateViz(dx, dy, inRange);
     }
 

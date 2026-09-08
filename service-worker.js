@@ -1,4 +1,4 @@
-const CACHE_NAME = "wardogs-fire-coordinator-v0.9.0-beta";
+const CACHE_NAME = "wardogs-fire-coordinator-v0.10.0-beta";
 const APP_SHELL = [
   "./",
   "./index.html",

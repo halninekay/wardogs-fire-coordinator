@@ -1,0 +1,57 @@
+{
+  "source": "https://github.com/apollyon-sys/wardogs-calculator",
+  "license": "MIT for original project source/data; WARDOGS game assets and map imagery are excluded.",
+  "coordinateMetersPerUnit": 100,
+  "maps": [
+    {
+      "id": "bakurani",
+      "name": "Bakurani",
+      "widthKm": 16,
+      "heightKm": 16,
+      "bounds": {
+        "minX": 23.35,
+        "maxX": 133.6,
+        "minY": 19.34,
+        "maxY": 129.65
+      },
+      "tileBounds": {
+        "minX": -0.03,
+        "maxX": 163.81,
+        "minY": -0.01,
+        "maxY": 163.83
+      },
+      "tiles": {
+        "path": "maps/tiles/bakurani",
+        "tileSize": 256,
+        "minZoom": 0,
+        "maxZoom": 7,
+        "extension": "webp"
+      }
+    },
+    {
+      "id": "ozeti",
+      "name": "Ozeti",
+      "widthKm": 32,
+      "heightKm": 32,
+      "bounds": {
+        "minX": 57.58,
+        "maxX": 143.07,
+        "minY": 21.81,
+        "maxY": 99.56
+      },
+      "tileBounds": {
+        "minX": -0.03,
+        "maxX": 163.81,
+        "minY": -0.01,
+        "maxY": 163.83
+      },
+      "tiles": {
+        "path": "maps/tiles/ozeti",
+        "tileSize": 256,
+        "minZoom": 0,
+        "maxZoom": 7,
+        "extension": "webp"
+      }
+    }
+  ]
+}
