@@ -73,3 +73,8 @@ WARDOGS game assets, names, trademarks, and map imagery remain the property of t
 ## Disclaimer
 
 This is an unofficial fan-made utility for WARDOGS. It is not affiliated with, endorsed by, or sponsored by the WARDOGS developers or publishers.
+If you find WARDOGS Fire Coordinator useful and would like to support its development, you can buy me a coffee. ☕
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support%20the%20project-FFDD00?logo=buymeacoffee&logoColor=000000)](https://www.buymeacoffee.com/halninekay)
+
+Support is completely optional — the tool will remain free and open source.
